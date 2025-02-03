@@ -1,0 +1,280 @@
+[2025-02-03T10:19:25.461+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-02-03T10:19:25.473+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: store_top_scorers.insert_scorers manual__2025-02-03T10:18:38.597835+00:00 [queued]>
+[2025-02-03T10:19:25.480+0000] {taskinstance.py:2613} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: store_top_scorers.insert_scorers manual__2025-02-03T10:18:38.597835+00:00 [queued]>
+[2025-02-03T10:19:25.481+0000] {taskinstance.py:2866} INFO - Starting attempt 1 of 4
+[2025-02-03T10:19:25.493+0000] {taskinstance.py:2889} INFO - Executing <Task(PythonOperator): insert_scorers> on 2025-02-03 10:18:38.597835+00:00
+[2025-02-03T10:19:25.500+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=152) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-02-03T10:19:25.502+0000] {standard_task_runner.py:72} INFO - Started process 154 to run task
+[2025-02-03T10:19:25.502+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'store_top_scorers', 'insert_scorers', 'manual__2025-02-03T10:18:38.597835+00:00', '--job-id', '18', '--raw', '--subdir', 'DAGS_FOLDER/top_scorer_dag.py', '--cfg-path', '/tmp/tmpdkmvhhvh']
+[2025-02-03T10:19:25.504+0000] {standard_task_runner.py:105} INFO - Job 18: Subtask insert_scorers
+[2025-02-03T10:19:25.544+0000] {task_command.py:467} INFO - Running <TaskInstance: store_top_scorers.insert_scorers manual__2025-02-03T10:18:38.597835+00:00 [running]> on host 56596f446f27
+[2025-02-03T10:19:25.604+0000] {taskinstance.py:3132} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='store_top_scorers' AIRFLOW_CTX_TASK_ID='insert_scorers' AIRFLOW_CTX_EXECUTION_DATE='2025-02-03T10:18:38.597835+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-02-03T10:18:38.597835+00:00'
+[2025-02-03T10:19:25.606+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-02-03T10:19:25.607+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-02-03T10:19:25.608+0000] {logging_mixin.py:190} INFO - Current task name:insert_scorers state:running start_date:2025-02-03 10:19:25.474423+00:00
+[2025-02-03T10:19:25.609+0000] {logging_mixin.py:190} INFO - Dag name:store_top_scorers and current dag run status:running
+[2025-02-03T10:19:25.610+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2025-02-03T10:19:25.618+0000] {base.py:84} INFO - Retrieving connection 'football_stats'
+[2025-02-03T10:19:25.621+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Mohamed Salah', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.623+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.626+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Erling Haaland', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.628+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.632+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Alexander Isak', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.634+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.638+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Chris Wood', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.639+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.643+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Cole Palmer', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.644+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.648+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Bryan Mbeumo', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.649+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.653+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Justin Kluivert', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.654+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.657+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Matheus Cunha', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.658+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.661+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Yoane Wissa', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.663+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.667+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Premier League', 'Ollie Watkins', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.668+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.671+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Robert Lewandowski', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.672+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.676+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Kylian Mbappé', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.677+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.681+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Raphinha', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.682+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.685+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Ante Budimir', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.686+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.689+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Dodi Lukébakio', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.690+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.694+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Kike García', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.695+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.699+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Ayoze Pérez', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.701+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.704+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Vinicius Junior', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.705+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.709+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Antoine Griezmann', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.710+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.714+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['La Liga', 'Thierno Barry', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.715+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.718+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Harry Kane', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.719+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.722+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Omar Marmoush', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.723+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.726+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Patrik Schick', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.728+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.732+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Tim Kleindienst', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.733+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.737+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Jonathan Burkardt', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.738+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.741+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Hugo Ekitiké', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.743+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.747+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Jamal Musiala', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.749+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.752+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Florian Wirtz', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.753+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.756+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Serhou Guirassy', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.758+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.765+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Bundesliga', 'Mohamed Amoura', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.768+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.774+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Mateo Retegui', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.780+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.793+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Marcus Thuram', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.796+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.801+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Moise Kean', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.804+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.810+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Ademola Lookman', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.812+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.818+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Romelu Lukaku', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.819+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.823+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Lautaro Martínez', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.825+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.828+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Lorenzo Lucca', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.829+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.833+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Artem Dovbyk', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.834+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.838+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Dušan Vlahović', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.840+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.844+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Serie A', 'Sebastiano Esposito', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.845+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.849+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Ousmane Dembélé', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.851+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.854+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Mason Greenwood', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.856+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.860+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Jonathan David', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.862+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.865+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Bradley Barcola', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.866+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.870+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Evann Guessand', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.872+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.876+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Ludovic Ajorque', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.877+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.881+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Emanuel Emegha', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.882+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.886+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Keito Nakamura', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.888+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.892+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Arnaud Kalimuendo', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.893+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.897+0000] {sql.py:553} INFO - Running statement: 
+        INSERT INTO top_scorers (league, player, position, club, goals, appearances)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        , parameters: ['Ligue 1', 'Hamed Junior Traoré', '', 'Unknown', '0', '0']
+[2025-02-03T10:19:25.898+0000] {sql.py:562} INFO - Rows affected: 1
+[2025-02-03T10:19:25.900+0000] {top_scorer_dag.py:127} INFO - Data successfully inserted into PostgreSQL.
+[2025-02-03T10:19:25.901+0000] {python.py:240} INFO - Done. Returned value was: None
+[2025-02-03T10:19:25.908+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2025-02-03T10:19:25.909+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=store_top_scorers, task_id=insert_scorers, run_id=manual__2025-02-03T10:18:38.597835+00:00, execution_date=20250203T101838, start_date=20250203T101925, end_date=20250203T101925
+[2025-02-03T10:19:25.916+0000] {logging_mixin.py:190} INFO - Task instance in success state
+[2025-02-03T10:19:25.917+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2025-02-03T10:19:25.918+0000] {logging_mixin.py:190} INFO - Dag name:store_top_scorers queued_at:2025-02-03 10:18:38.747590+00:00
+[2025-02-03T10:19:25.919+0000] {logging_mixin.py:190} INFO - Task hostname:56596f446f27 operator:PythonOperator
+[2025-02-03T10:19:25.958+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-02-03T10:19:25.971+0000] {taskinstance.py:3895} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-02-03T10:19:25.973+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
