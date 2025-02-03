@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 import time
 import random
 import requests
-import pandas as pd
 import csv
 import os
 from bs4 import BeautifulSoup
@@ -12,14 +11,13 @@ from airflow.providers.postgres.operators.postgres import PostgresOperator
 from airflow.providers.postgres.hooks.postgres import PostgresHook
 from airflow.utils.log.logging_mixin import LoggingMixin
 
-# Anti-blocking: Rotating user-agent headers
-USER_AGENTS = [
+user_agents_list = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15",
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36",
 ]
 
-LEAGUE_URLS = {
+leagues_links = {
     "Premier League": "https://www.transfermarkt.com/premier-league/torschuetzenliste/wettbewerb/GB1",
     "La Liga": "https://www.transfermarkt.com/laliga/torschuetzenliste/wettbewerb/ES1",
     "Bundesliga": "https://www.transfermarkt.com/bundesliga/torschuetzenliste/wettbewerb/L1",
@@ -27,49 +25,38 @@ LEAGUE_URLS = {
     "Ligue 1": "https://www.transfermarkt.com/ligue-1/torschuetzenliste/wettbewerb/FR1",
 }
 
-CSV_FILE_PATH = "/tmp/top_scorers.csv"  # Path to save the CSV file
+file_path = "/tmp/scorers.csv"
 
 
-def get_random_user_agent():
-    return random.choice(USER_AGENTS)
+def pick_user_agent():
+    return random.choice(user_agents_list)
 
 
-def fetch_top_scorers():
-    """Fetch top scorers from Transfermarkt and save to a CSV file."""
+def scrape_scorers():
     session = requests.Session()
-    all_scorers = []
+    players_data = []
 
-    for league, url in LEAGUE_URLS.items():
-        headers = {"User-Agent": get_random_user_agent()}
-
+    for league, url in leagues_links.items():
+        headers = {"User-Agent": pick_user_agent()}
         try:
             response = session.get(url, headers=headers, timeout=10)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, "html.parser")
-
             table = soup.find("table", class_="items")
             if not table:
-                LoggingMixin().log.warning(f"Table not found for {league}")
+                LoggingMixin().log.warning(f"No table for {league}")
                 continue
 
-            rows = table.find_all("tr", class_=["odd", "even"])  # Extract both odd and even rows
-
-            for row in rows[:10]:  # Fetch top 10 scorers per league
+            rows = table.find_all("tr", class_=["odd", "even"])
+            for row in rows[:10]:
                 cols = row.find_all("td")
-                if len(cols) > 5:  # Ensure there are enough columns
-
-                    # Extract player name and position separately
-                    player_info = cols[1].text.strip()
-                    player_parts = player_info.split("\n")
-                    player_name = player_parts[0].strip()
-                    player_position = player_parts[1].strip() if len(player_parts) > 1 else "Unknown"
-
-                    # Extract club name
+                if len(cols) > 5:
+                    player_info = cols[1].text.strip().split("\n")
+                    name = player_info[0].strip()
+                    position = player_info[1].strip() if len(player_info) > 1 else "Unknown"
                     club = cols[3].img["alt"] if cols[3].img else "Unknown"
-
-                    # Extract and clean goals & appearances
                     goals = cols[4].text.strip()
-                    appearances = cols[5].text.strip()
+                    matches = cols[5].text.strip()
 
                     try:
                         goals = int(goals)
@@ -77,54 +64,44 @@ def fetch_top_scorers():
                         goals = 0
 
                     try:
-                        appearances = int(appearances)
+                        matches = int(matches)
                     except ValueError:
-                        appearances = 0
+                        matches = 0
 
-                    # Store extracted data
-                    all_scorers.append([league, player_name, player_position, club, goals, appearances])
-
-            time.sleep(random.uniform(3, 7))  # Random delay for anti-blocking
-
+                    players_data.append([league, name, position, club, goals, matches])
+            time.sleep(random.uniform(3, 7))
         except requests.exceptions.RequestException as e:
-            LoggingMixin().log.error(f"Failed to fetch data for {league}: {e}")
+            LoggingMixin().log.error(f"Error fetching {league}: {e}")
 
-    if not all_scorers:
-        raise ValueError("No data fetched from Transfermarkt")
+    if not players_data:
+        raise ValueError("No data scraped")
 
-    # Save data to CSV file
-    with open(CSV_FILE_PATH, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
-        writer.writerow(["League", "Player", "Position", "Club", "Goals", "Appearances"])  # Headers
-        writer.writerows(all_scorers)
+    with open(file_path, mode="w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["League", "Player", "Position", "Club", "Goals", "Matches"])
+        writer.writerows(players_data)
 
-    LoggingMixin().log.info(f"Data successfully saved to {CSV_FILE_PATH}")
+    LoggingMixin().log.info(f"Saved data to {file_path}")
 
 
-def insert_scorers_into_postgres():
-    """Reads the CSV file and inserts the data into PostgreSQL."""
-    postgres_hook = PostgresHook(postgres_conn_id='football_stats')
+def save_to_db():
+    db = PostgresHook(postgres_conn_id='football_db')
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"File {file_path} missing")
 
-    if not os.path.exists(CSV_FILE_PATH):
-        raise FileNotFoundError(f"CSV file {CSV_FILE_PATH} not found.")
-
-    # Read CSV file
-    with open(CSV_FILE_PATH, mode="r", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)  # Skip header row
-
+    with open(file_path, mode="r", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        next(reader)
         insert_query = """
         INSERT INTO top_scorers (league, player, position, club, goals, appearances)
         VALUES (%s, %s, %s, %s, %s, %s)
         """
-
         for row in reader:
             try:
-                postgres_hook.run(insert_query, parameters=row)
+                db.run(insert_query, parameters=row)
             except Exception as e:
-                LoggingMixin().log.error(f"Failed to insert player {row[1]}: {e}")
-
-    LoggingMixin().log.info("Data successfully inserted into PostgreSQL.")
+                LoggingMixin().log.error(f"Failed to insert {row[1]}: {e}")
+    LoggingMixin().log.info("Data added to DB")
 
 
 default_args = {
@@ -136,26 +113,27 @@ default_args = {
 }
 
 dag = DAG(
-    'store_top_scorers',
+    'goal_scorers_pipeline',
     default_args=default_args,
-    description='Fetch top goal scorers from Transfermarkt and store in Postgres',
+    description='Scrape and store football top scorers',
     schedule_interval=timedelta(days=1),
     catchup=False,
 )
 
-fetch_top_scorers_task = PythonOperator(
-    task_id='fetch_top_scorers',
-    python_callable=fetch_top_scorers,
+scrape_task = PythonOperator(
+    task_id='scrape_scorers',
+    python_callable=scrape_scorers,
     dag=dag,
 )
 
-create_table_task = PostgresOperator(
-    task_id='create_table',
-    postgres_conn_id='football_stats',
+create_table = PostgresOperator(
+    task_id='create_scorers_table',
+    postgres_conn_id='football_db',
     sql="""
     CREATE TABLE IF NOT EXISTS top_scorers (
         id SERIAL PRIMARY KEY,
         league TEXT NOT NULL,
+        
         player TEXT NOT NULL,
         position TEXT,
         club TEXT,
@@ -166,10 +144,10 @@ create_table_task = PostgresOperator(
     dag=dag,
 )
 
-insert_scorers_task = PythonOperator(
-    task_id='insert_scorers',
-    python_callable=insert_scorers_into_postgres,
+save_task = PythonOperator(
+    task_id='save_scorers',
+    python_callable=save_to_db,
     dag=dag,
 )
 
-fetch_top_scorers_task >> create_table_task >> insert_scorers_task
+scrape_task >> create_table >> save_task
